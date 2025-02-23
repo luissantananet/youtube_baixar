@@ -48,6 +48,25 @@ Para criar um executável do projeto e salvar em `./app/`, siga os passos abaixo
     ```
 3. O executável será gerado na pasta `./app/`.
 
+## Como criar o executável
+
+1. Instale as dependências:
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+2. Instale o PyInstaller:
+   ```sh
+   pip install pyinstaller
+   ```
+
+3. Gere o executável:
+   ```sh
+   pyinstaller --onefile --windowed youtube_downloader.py
+   ```
+
+4. O executável será gerado na pasta `dist`.
+
 ## Funcionalidades
 
 - Baixar vídeos do YouTube em formato MP4.

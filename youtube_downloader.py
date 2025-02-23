@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
-import yt_dlp
+#import yt_dlp
 import os
 import subprocess
 import threading
@@ -94,9 +94,9 @@ format_menu.grid(row=1, column=1, padx=10, pady=10)
 destination_label = ttk.Label(root, text="Pasta de destino: Não definida")
 destination_label.grid(row=2, column=0, columnspan=2, padx=10, pady=10)
 choose_button = ttk.Button(root, text="Escolher pasta", command=choose_destination)
-choose_button.grid(row=2, column=2, padx=10, pady=10)
+choose_button.grid(row=2, column=2, padx=5, pady=10)
 open_button = ttk.Button(root, text="Abrir pasta", command=open_destination)
-open_button.grid(row=2, column=3, padx=10, pady=10)
+open_button.grid(row=2, column=3, padx=5, pady=10)
 
 # Download
 download_button = ttk.Button(root, text="Baixar", command=download_video)
