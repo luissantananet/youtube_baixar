@@ -1,9 +1,13 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
-#import yt_dlp
 import os
 import subprocess
 import threading
+import requests
+import shutil
+import sys
+import time
+import winreg
 
 def download_video():
     def run_download():
@@ -68,6 +72,85 @@ def open_destination():
 
 def clear_url():
     url_entry.delete(0, tk.END)
+
+def baixar_ffmpeg():
+    ffmpeg_path = 'C:/ffmpeg/'
+    ffmpeg_bin_path = os.path.join(ffmpeg_path, 'bin')
+    ffmpeg_exe_path = os.path.join(ffmpeg_bin_path, 'ffmpeg.exe')
+    ffmpeg_url = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z"
+    ffmpeg_zip_path = os.path.join(ffmpeg_path, 'ffmpeg.7z')
+    seven_zip_path = 'C:/Program Files/7-Zip/7z.exe'
+    
+    try:
+        if os.path.exists(ffmpeg_exe_path):
+            print("ffmpeg já está instalado.")
+            return
+
+        if not os.path.exists(ffmpeg_path):
+            os.makedirs(ffmpeg_path)
+        if not os.path.exists(ffmpeg_zip_path):
+            print("Baixando ffmpeg...")
+            response = requests.get(ffmpeg_url, stream=True)
+            total_length = response.headers.get('content-length')
+
+            if total_length is None:  # Sem cabeçalho de comprimento de conteúdo
+                with open(ffmpeg_zip_path, 'wb') as f:
+                    f.write(response.content)
+            else:
+                dl = 0
+                total_length = int(total_length)
+                with open(ffmpeg_zip_path, 'wb') as f:
+                    for data in response.iter_content(chunk_size=4096):
+                        dl += len(data)
+                        f.write(data)
+                        done = int(50 * dl / total_length)
+                        sys.stdout.write("\r[%s%s]" % ('=' * done, ' ' * (50-done)))
+                        sys.stdout.flush()
+
+        print("\nExtraindo ffmpeg...")
+        if not os.path.exists(seven_zip_path):
+            raise FileNotFoundError("7-Zip não está instalado. Por favor, instale o 7-Zip e tente novamente.")
+        
+        start_time = time.time()
+        subprocess.run([seven_zip_path, 'x', ffmpeg_zip_path, '-aoa', '-o' + ffmpeg_path], check=True)
+        end_time = time.time()
+        
+        # Mover arquivos da pasta extraída para o diretório desejado
+        extracted_folder = os.path.join(ffmpeg_path, 'ffmpeg-2025-02-26-git-99e2af4e78-full_build')
+        for item in os.listdir(extracted_folder):
+            s = os.path.join(extracted_folder, item)
+            d = os.path.join(ffmpeg_path, item)
+            if os.path.isdir(s):
+                shutil.move(s, d)
+            else:
+                shutil.move(s, d)
+        
+        # Remover a pasta vazia
+        os.rmdir(extracted_folder)
+        
+        print(f"ffmpeg extraído em {ffmpeg_path} em {end_time - start_time:.2f} segundos")
+        
+        # Adicionar ffmpeg/bin ao PATH
+        ffmpeg_bin_path = os.path.join(ffmpeg_path, 'bin')
+        if ffmpeg_bin_path not in os.environ["PATH"]:
+            os.environ["PATH"] += os.pathsep + ffmpeg_bin_path
+            
+            # Adicionar ao PATH do sistema
+            with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', 0, winreg.KEY_ALL_ACCESS) as key:
+                current_path = winreg.QueryValueEx(key, 'Path')[0]
+                new_path = f"{current_path};{ffmpeg_bin_path}"
+                winreg.SetValueEx(key, 'Path', 0, winreg.REG_EXPAND_SZ, new_path)
+                os.system('setx /M PATH "%PATH%"')
+                os.system('taskkill /F /IM cmd.exe')
+        
+        # Remover o arquivo zip
+        os.remove(ffmpeg_zip_path)
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao extrair ffmpeg: {e}")
+    except FileNotFoundError as e:
+        print(e)
+    except Exception as e:
+        print(f"Erro ao baixar e extrair ffmpeg: {e}")
 
 root = tk.Tk()
 root.title("Youtube Downloader")
