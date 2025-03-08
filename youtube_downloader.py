@@ -14,6 +14,7 @@ class YoutubeDownloader:
     def __init__(self, root):
         self.root = root
         self.root.title("Youtube Downloader")
+        self.root.iconbitmap('icons/icons8-youtube (1).ico')  # Definir o ícone do programa
         self.destination_path = ""
 
         # Centralizar a janela
@@ -130,6 +131,12 @@ class YoutubeDownloader:
             progress_label.pack(pady=10)
             progress_bar = ttk.Progressbar(progress_window, length=300, mode='determinate')
             progress_bar.pack(pady=10)
+
+            # Centralizar a janela de progresso
+            progress_window.update_idletasks()
+            x = (self.root.winfo_screenwidth() - progress_window.winfo_reqwidth()) // 2
+            y = (self.root.winfo_screenheight() - progress_window.winfo_reqheight()) // 2
+            progress_window.geometry(f"+{x}+{y}")
 
             try:
                 if os.path.exists(ffmpeg_exe_path):
