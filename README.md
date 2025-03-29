@@ -1,83 +1,99 @@
-# Youtube Downloader
+# YouTube Baixar v2
 
-Este projeto é uma aplicação GUI para baixar vídeos do YouTube em formatos MP4 e MP3.
-
-## Requisitos
-
-- Python 3.x
-- `tkinter`
-- `yt-dlp`
-
-## Instalação
-
-1. Clone o repositório:
-    ```sh
-    git clone https://github.com/seu-usuario/youtube_downloader.git
-    ```
-2. Navegue até o diretório do projeto:
-    ```sh
-    cd youtube_downloader
-    ```
-3. Instale as dependências:
-    ```sh
-    pip install -r requirements.txt
-    ```
-
-## Uso
-
-1. Execute o script `youtube_downloader.py`:
-    ```sh
-    python youtube_downloader.py
-    ```
-2. Insira a URL do vídeo do YouTube que deseja baixar.
-3. Selecione o formato desejado (MP4 ou MP3).
-4. Escolha a pasta de destino para salvar o arquivo.
-5. Clique no botão "Baixar" para iniciar o download.
-
-## Criar Executável
-
-Para criar um executável do projeto e salvar em `./app/`, siga os passos abaixo:
-
-1. Instale o `pyinstaller`:
-    ```sh
-    pip install pyinstaller
-    ```
-2. Execute o comando para criar o executável:
-    ```sh
-    pyinstaller --onefile --distpath ./app youtube_downloader.py
-    ```
-3. O executável será gerado na pasta `./app/`.
-
-## Como criar o executável
-
-1. Instale as dependências:
-   ```sh
-   pip install -r requirements.txt
-   ```
-
-2. Instale o PyInstaller:
-   ```sh
-   pip install pyinstaller
-   ```
-
-3. Gere o executável:
-   ```sh
-   pyinstaller --onefile --windowed youtube_downloader.py
-   ```
-
-4. O executável será gerado na pasta `dist`.
+Um aplicativo para baixar vídeos e músicas do YouTube, com suporte para playlists e conversão de áudio para MP3.
 
 ## Funcionalidades
 
-- Baixar vídeos do YouTube em formato MP4.
-- Baixar áudio de vídeos do YouTube em formato MP3.
-- Exibir progresso do download.
-- Abrir a pasta do arquivo baixado diretamente da aplicação.
+- Baixar vídeos do YouTube no formato MP4.
+- Baixar áudio do YouTube e converter para MP3.
+- Suporte para download de playlists completas.
+- Interface gráfica amigável desenvolvida com PyQt5.
+- Barra de progresso para acompanhar o download.
+- Lista de arquivos baixados exibida na interface.
+
+## Requisitos
+
+Certifique-se de ter os seguintes requisitos instalados:
+
+- Python 3.8 ou superior
+- Bibliotecas Python:
+  - `PyQt5`
+  - `pytubefix`
+  - `pydub`
+- FFmpeg **é necessário**.
+
+### Instalação das Dependências
+
+Instale as dependências do projeto com o seguinte comando:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Configuração do FFmpeg
+
+1. Baixe o FFmpeg no site oficial: [https://ffmpeg.org/download.html](https://ffmpeg.org/download.html).
+2. Extraia os arquivos e adicione o caminho da pasta `bin` ao PATH do sistema.
+3. Verifique se o FFmpeg está instalado corretamente executando:
+   ```bash
+   ffmpeg -version
+   ```
+
+## Como Usar
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/youtube_baixar_v2.git
+   cd youtube_baixar_v2
+   ```
+
+2. Execute o aplicativo:
+   ```bash
+   python console.py
+   ```
+
+3. Na interface gráfica:
+   - Cole o link do vídeo ou playlist do YouTube no campo de URL.
+   - Escolha o formato desejado (`MP3` ou `MP4`).
+   - Clique no botão **"Escolher Pasta"** para selecionar o destino dos downloads.
+   - Clique no botão **"Baixar"** para iniciar o download.
+
+## Estrutura do Projeto
+
+```
+youtube_baixar_v2/
+├── console.py          # Código principal do aplicativo
+├── window.ui           # Arquivo de design da interface (PyQt5)
+├── requirements.txt    # Lista de dependências do projeto
+├── .gitignore          # Arquivo para ignorar arquivos/diretórios no Git
+└── README.md           # Documentação do projeto
+```
 
 ## Contribuição
 
-Sinta-se à vontade para contribuir com melhorias para este projeto. Faça um fork do repositório, crie uma branch para suas alterações e envie um pull request.
+Contribuições são bem-vindas! Siga os passos abaixo para contribuir:
+
+1. Faça um fork do repositório.
+2. Crie uma branch para sua feature ou correção:
+   ```bash
+   git checkout -b minha-feature
+   ```
+3. Faça o commit das suas alterações:
+   ```bash
+   git commit -m "Adicionar nova funcionalidade"
+   ```
+4. Envie suas alterações:
+   ```bash
+   git push origin minha-feature
+   ```
+5. Abra um Pull Request.
 
 ## Licença
 
-Este projeto está licenciado sob a licença MIT.
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+---
+
+### Autor
+
+Desenvolvido por **Seu Nome**. Entre em contato pelo [seu-email@example.com](mailto:seu-email@example.com).
